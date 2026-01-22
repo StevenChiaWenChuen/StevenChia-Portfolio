@@ -35,6 +35,8 @@
             overflow: hidden;
             height: 100vh;
             width: 100vw;
+            position: fixed;
+            touch-action: pan-y;
         }
 
         /* --- Custom Cursor (Desktop Only) --- */
@@ -80,7 +82,8 @@
             z-index: 100;
             font-family: 'Space Grotesk', sans-serif;
             /* Added subtle gradient for readability on scroll */
-            background: linear-gradient(to bottom, rgba(232, 228, 217, 0.9), transparent);
+            background: linear-gradient(to bottom, rgba(232, 228, 217, 0.95), rgba(232, 228, 217, 0.8));
+            backdrop-filter: blur(10px);
         }
 
         .logo {
@@ -158,6 +161,8 @@
             opacity: 0;
             visibility: hidden;
             display: none;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         .page.active {
             display: flex;
@@ -253,69 +258,201 @@
 
         /* ================= MOBILE RESPONSIVE ================= */
         @media (max-width: 768px) {
+            /* Prevent horizontal scroll */
+            body { overflow-x: hidden; }
+            
             /* General Navigation */
-            nav { padding: 1.5rem; }
+            nav { padding: 1rem 1.5rem; }
             .menu { display: none; }
-            .hamburger { display: flex; }
+            .hamburger { display: flex; pointer-events: auto; }
+            .logo { font-size: 1rem; }
             
             /* Mobile Menu Styles */
             .mobile-menu-overlay .menu-item {
-                font-size: 2rem;
+                font-size: 1.8rem;
                 color: var(--text-main);
+                pointer-events: auto;
             }
             .mobile-menu-overlay .menu-item.active {
                 color: var(--primary);
             }
 
-            /* Font Sizing */
-            .huge-text { font-size: 18vw; }
+            /* Page padding adjustment */
+            .page { padding: 1rem; padding-top: 5rem; }
             
             /* Home Mobile */
             .home-top-right { display: none; }
+            
+            #home {
+                padding: 1rem;
+                padding-bottom: 0;
+            }
+            
+            .home-center-stage {
+                height: calc(100vh - 200px);
+            }
+            
+            .home-title { 
+                font-size: 13vw; 
+                line-height: 0.9;
+                white-space: normal;
+                word-break: break-word;
+                padding: 0 1rem;
+                top: 20%;
+            }
+            
+            .home-user-img { 
+                height: 50vh;
+                max-height: 400px;
+                bottom: 150px;
+            }
+            
             .home-bottom-info { 
                 flex-direction: column; 
-                gap: 1rem; 
+                gap: 1.5rem; 
                 text-align: center; 
                 align-items: center;
-                padding-bottom: 3rem;
+                padding: 0 1.5rem;
+                bottom: 1rem;
+                position: fixed;
             }
-            .home-user-img { 
-                height: 65vh;
+            
+            .home-info-block {
+                width: 100%;
             }
-            .home-title { font-size: 18vw; }
+            
+            .lorem-text {
+                font-size: 0.85rem;
+                max-width: 100%;
+            }
 
             /* About Mobile */
+            #about {
+                padding: 5rem 1rem 1rem 1rem;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+            
             .about-content-wrapper { 
                 flex-direction: column; 
                 align-items: center; 
                 gap: 2rem; 
                 height: auto;
-                padding-bottom: 4rem;
-                overflow-y: auto;
+                max-width: 100%;
+                padding-bottom: 8rem;
             }
-            .about-img-col { height: auto; width: 100%; justify-content: center;}
-            .about-user-img { width: 60%; max-height: 40vh; }
-            .about-text-col { width: 100%; text-align: center; gap: 1.5rem; }
-            .about-bottom-title { font-size: 25vw; bottom: 5vh; }
+            
+            .about-img-col { 
+                height: auto; 
+                width: 100%; 
+                justify-content: center;
+            }
+            
+            .about-user-img { 
+                width: 70%; 
+                max-width: 300px;
+                max-height: 50vh;
+                object-fit: cover;
+                border-radius: 8px;
+            }
+            
+            .about-text-col { 
+                width: 100%; 
+                padding: 0 1rem;
+                gap: 1.5rem; 
+            }
+            
+            .about-bottom-title { 
+                font-size: 20vw; 
+                bottom: 2rem;
+                left: 50%;
+                transform: translateX(-50%);
+                opacity: 0.15;
+            }
             
             /* Portfolio Mobile */
+            #portfolio {
+                padding: 5rem 1rem 1rem 1rem;
+            }
+            
             .category-grid { 
                 grid-template-columns: 1fr;
-                width: 90%; 
-                gap: 10px;
-                height: 70vh;
+                width: 100%; 
+                max-width: 400px;
+                gap: 1rem;
+                height: auto;
+                max-height: 70vh;
             }
-            .cat-card { font-size: 1.5rem; }
             
-            .portfolio-detail { padding: 2rem; overflow-y: auto; }
+            .cat-card { 
+                font-size: 1.3rem;
+                min-height: 120px;
+                padding: 1rem;
+                pointer-events: auto;
+            }
+            
+            .portfolio-detail { 
+                padding: 5rem 1.5rem 2rem 1.5rem;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .back-btn {
+                font-size: 0.9rem;
+                margin-bottom: 1.5rem;
+                display: inline-block;
+                pointer-events: auto;
+            }
+            
+            #detail-title {
+                font-size: 12vw !important;
+                margin-bottom: 1rem;
+                word-break: break-word;
+            }
+            
             .placeholder-gallery { 
                 grid-template-columns: 1fr;
-                padding-bottom: 4rem;
+                gap: 1rem;
+                margin-top: 2rem;
+                padding-bottom: 2rem;
             }
-            .gallery-item { height: 200px; }
+            
+            .gallery-item { 
+                height: 250px;
+                width: 100%;
+            }
 
             /* Contact Mobile */
-            .contact-value { font-size: 1.5rem; }
+            #contact {
+                padding: 5rem 1.5rem 2rem 1.5rem;
+            }
+            
+            .contact-container {
+                width: 100%;
+                max-width: 400px;
+            }
+            
+            .contact-item {
+                margin-bottom: 2.5rem;
+            }
+            
+            .contact-label {
+                font-size: 0.8rem;
+            }
+            
+            .contact-value { 
+                font-size: 1.3rem;
+                word-break: break-all;
+                line-height: 1.4;
+            }
+        }
+        
+        /* Extra small devices */
+        @media (max-width: 375px) {
+            .home-title { font-size: 11vw; }
+            .home-user-img { height: 45vh; }
+            .cat-card { font-size: 1.1rem; min-height: 100px; }
+            .contact-value { font-size: 1.1rem; }
         }
     </style>
 </head>
@@ -324,7 +461,7 @@
     <div class="cursor"></div>
 
     <nav>
-        <div class="logo" onclick="navigateToHome()">PORTFOLIO</div>
+        <div class="logo" onclick="navigateToHome()">STEVEN<span>CHIA</span></div>
         
         <div class="menu">
             <a href="#" class="menu-item active" data-target="home">Home</a>
@@ -354,7 +491,7 @@
 
             <div class="home-center-stage">
                 <h1 class="huge-text home-title">STEVENCHIA<br>PORTFOLIO</h1>
-                <img src="VIetnam copy.png" alt="Steven Chia" class="home-user-img">
+                <img src="Image/VIetnam copy.png" alt="Steven Chia" class="home-user-img">
             </div>
 
             <div class="home-bottom-info">
@@ -371,7 +508,7 @@
         <section id="about" class="page">
             <div class="about-content-wrapper">
                 <div class="about-img-col">
-                     <img src="IMG_0078.JPG" alt="Steven Chia" class="about-user-img">
+                     <img src="Image/IMG_0078.JPG" alt="Steven Chia" class="about-user-img">
                 </div>
                 <div class="about-text-col">
                     <div class="lorem-text">
